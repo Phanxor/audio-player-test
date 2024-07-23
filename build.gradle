@@ -10,7 +10,7 @@ plugins {
 apply from: "https://raw.githubusercontent.com/henkelmax/mod-gradle-scripts/${mod_gradle_script_version}/mod.gradle"
 
 repositories {
-
+//    mavenCentral()
 }
 
 dependencies {
@@ -26,6 +26,11 @@ dependencies {
 
     implementation "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
     modRuntimeOnly "maven.modrinth:simple-voice-chat:fabric-${voicechat_mod_version}"
+
+    implementation("org.apache.httpcomponents:httpcore:4.4.16")
+    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+    shadow("org.apache.httpcomponents:httpcore:4.4.16")
+    shadow("org.apache.httpcomponents:httpclient:4.5.13")
 
     Set<String> voicechatModules = [
             'fabric-api-base',
@@ -53,8 +58,17 @@ processResources {
 }
 
 shadowJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     relocate 'javazoom', "de.maxhenkel.audioplayer.javazoom"
     relocate 'org.tritonus', "de.maxhenkel.audioplayer.tritonus"
+    mergeServiceFiles()
+}
+
+jar {
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 node {
