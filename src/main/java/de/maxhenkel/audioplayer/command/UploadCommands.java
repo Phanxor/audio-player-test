@@ -32,25 +32,16 @@ public class UploadCommands {
     @Command
     public void audioPlayer(CommandContext<CommandSourceStack> context) {
         context.getSource().sendSuccess(() ->
-                        Component.literal("Upload audio via Filebin ")
+                        Component.literal("Upload audio ")
                                 .append(Component.literal("here").withStyle(style -> {
                                     return style
-                                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/audioplayer upload"))
+                                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/audioplayer web"))
                                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to show more")));
                                 }).withStyle(ChatFormatting.GREEN))
                                 .append(".")
                 , false);
         context.getSource().sendSuccess(() ->
-                        Component.literal("Upload audio with access to the servers file system ")
-                                .append(Component.literal("here").withStyle(style -> {
-                                    return style
-                                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/audioplayer serverfile"))
-                                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to show more")));
-                                }).withStyle(ChatFormatting.GREEN))
-                                .append(".")
-                , false);
-        context.getSource().sendSuccess(() ->
-                        Component.literal("Upload audio from a URL ")
+                        Component.literal("Use a URL ")
                                 .append(Component.literal("here").withStyle(style -> {
                                     return style
                                             .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/audioplayer url"))
